@@ -4,7 +4,12 @@ import { Link } from "react-router";
 import Button from "../../../../Component/ui/Button";
 import { memo } from "react";
 
-const AddMemberHeader = () => {
+type AddMemberHeaderProps = {
+  onCreate: () => void;
+  onDiscard: () => void;
+};
+
+const AddMemberHeader = ({ onCreate, onDiscard }: AddMemberHeaderProps) => {
   return (
     <div
       className="py-[3vh] w-full border-b flex text-xl font-bold justify-between"
@@ -31,6 +36,8 @@ const AddMemberHeader = () => {
         <PermissionGate permission={Member_Permissions.CREATE_MEMBER}>
           <Button text="Create Member" onClick={() => alert("Create Member clicked")} />
         </PermissionGate>
+        <Button text="Discard Draft" variant="secondary" onClick={onDiscard} />
+        <Button text="Create Member" onClick={onCreate} />
       </div>
     </div>
   );

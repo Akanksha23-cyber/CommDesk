@@ -1,5 +1,7 @@
 import Button from "@/Component/ui/Button";
 import { Member_Permissions, PermissionGate } from "@/features/Permissions/v1";
+import PermissionWrapper from "@/features/Permission/Component/PermissionWrapper";
+import { MemberPermissionConstant } from "@/features/Permission/Constant/Permission.Constant";
 import { IoPersonAdd } from "react-icons/io5";
 import { useNavigate } from "react-router";
 
@@ -33,12 +35,14 @@ const MemberHeader = () => {
       </div>
       <div className="w-1/3 h-full flex justify-end items-center gap-3 px-5">
         <PermissionGate permission={Member_Permissions.CREATE_MEMBER}>
+        <PermissionWrapper action="create" requiredPermission={MemberPermissionConstant.create}>
           <Button
             text="Add Member"
             onClick={() => navigate("/org/add-member")}
             icon={<IoPersonAdd />}
           />
         </PermissionGate>
+        </PermissionWrapper>
         <img
           src="https://randomuser.me/api/portraits/men/1.jpg"
           className="w-9 h-9 rounded-full object-cover"
