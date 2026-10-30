@@ -1,4 +1,5 @@
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { Member_Permissions, PermissionGate } from "@/features/Permissions/v1";
 import { Link } from "react-router";
 import Button from "../../../../Component/ui/Button";
 import { memo } from "react";
@@ -25,6 +26,16 @@ const AddMemberHeader = ({ onCreate, onDiscard }: AddMemberHeaderProps) => {
       </Link>
 
       <div className="w-[40%] h-full mr-[3vw] flex justify-end gap-3">
+        <PermissionGate permission={Member_Permissions.CREATE_MEMBER}>
+          <Button
+            text="Discard Draft"
+            variant="secondary"
+            onClick={() => alert("Discard Draft clicked")}
+          />
+        </PermissionGate>
+        <PermissionGate permission={Member_Permissions.CREATE_MEMBER}>
+          <Button text="Create Member" onClick={() => alert("Create Member clicked")} />
+        </PermissionGate>
         <Button text="Discard Draft" variant="secondary" onClick={onDiscard} />
         <Button text="Create Member" onClick={onCreate} />
       </div>

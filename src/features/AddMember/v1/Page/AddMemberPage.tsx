@@ -1,5 +1,11 @@
 import { FormProvider } from "react-hook-form";
 import AddMemberHeader from "../Component/AddMemberHeader";
+import {
+  AccessDenied,
+  Member_Permissions,
+  PermissionBoundary,
+  PermissionLoading,
+} from "@/features/Permissions/v1";
 import Administrative_MetaData from "../Component/Administrative_MetaData";
 import Community_Involvement from "../Component/Community_Involment";
 import PersonalInfoCard from "../Sections/PersonalInfoCard";
@@ -19,6 +25,18 @@ const AddMemberPage = () => {
   });
 
   return (
+    <div className="w-full flex flex-col cd-page">
+      <AddMemberHeader />
+      <PermissionBoundary
+        permission={Member_Permissions.CREATE_MEMBER}
+        loadingFallback={<PermissionLoading />}
+        unauthorizedFallback={
+          <AccessDenied
+            title="You cannot create members yet"
+            description="Member creation tools are only visible to users with create access for the member directory."
+          />
+        }
+      >
     <FormProvider {...methods}>
       <div className="w-full flex flex-col cd-page">
         <AddMemberHeader onCreate={handleCreateMember} onDiscard={() => methods.reset()} />
@@ -30,6 +48,8 @@ const AddMemberPage = () => {
           </div>
           <Administrative_MetaData />
         </div>
+      </PermissionBoundary>
+    </div>
       </div>
     </FormProvider>
   );
